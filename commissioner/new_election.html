@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Election Setup</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard">
+    <h2>New Election Setup</h2>
+    <p>Fill out the details below to initiate a new election process.</p>
+
+    <div class="content-box">
+        <input type="text" placeholder="Election Name" id="electionName"><br>
+        <input type="date" id="electionDate"><br>
+        <input type="text" placeholder="Region / State" id="electionRegion"><br>
+        <button onclick="createElection()">Create Election</button>
+        <p id="msg" style="color:green; display:none;">✅ Election created successfully!</p>
+    </div>
+
+    <button onclick="goTo('dashboard.html')">⬅ Back to Dashboard</button>
+</div>
+
+<script src="script.js"></script>
+<script>
+function createElection() {
+    const name = document.getElementById("electionName").value;
+    const date = document.getElementById("electionDate").value;
+    const region = document.getElementById("electionRegion").value;
+
+    if (name && date && region) {
+        document.getElementById("msg").style.display = "block";
+    } else {
+        alert("Please fill all details!");
+    }
+}
+</script>
+</body>
+</html>
