@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Officer Dashboard</title>
+<style>
+:root{
+  --blue:#0b2a55;
+  --soft:#eef5ff;
+  --card:#ffffff;
+  --border:#d9e2ec;
+  --radius:12px;
+  --shadow:0 10px 24px rgba(0,0,0,.08);
+  font-family:system-ui,Segoe UI,Roboto;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--soft); color:#102a43; min-height:100vh;
+}
+.layout{ display:flex; min-height:100vh; }
+/* Sidebar with 45deg tricolour gradient */
+.sidebar{
+  width:270px; padding:22px 18px; color:#0a1a2b; position:sticky; top:0; height:100vh;
+  background:
+    linear-gradient(45deg,
+      #FF9933 0%, /* saffron */
+      #ffb366 22%,
+      #ffffff 50%, /* white */
+      #a6e1b8 72%,
+      #138808 100% /* green */
+    );
+  /* soft blend & polish */
+  box-shadow:inset 0 0 0 9999px rgba(255,255,255,0.08);
+}
+.brand{
+  display:flex; align-items:center; gap:10px; margin-bottom:18px;
+}
+.brand .crest{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.brand h1{font-size:16px;margin:0;color:#09233c;font-weight:800;letter-spacing:.3px}
+
+.nav{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.nav button{
+  text-align:left; padding:12px 12px; border-radius:10px; border:1px solid rgba(16,42,67,.08);
+  background:#ffffff; color:#0b2a55; font-weight:700; cursor:pointer; transition:.2s;
+}
+.nav button:hover{ background:#0b2a55; color:#ffffff; box-shadow:0 6px 16px rgba(11,42,85,.25) }
+.nav button.active{ background:#0b2a55; color:#fff }
+.footer-note{font-size:12px;opacity:.8;margin-top:auto;padding-top:16px}
+
+/* Main */
+.main{ flex:1; padding:28px; }
+.header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px }
+.header h2{ margin:0; color:var(--blue); font-size:22px }
+.card{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:18px; margin-bottom:16px
+}
+.table{ width:100%; border-collapse:collapse; }
+.table th, .table td{ border:1px solid var(--border); padding:10px; font-size:14px; text-align:left }
+.table th{ background:#f3f7ff; color:#0b2a55 }
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;background:#e7f0ff;color:#0b2a55;border:1px solid #cfe0ff}
+
+.btn{ padding:8px 10px; border-radius:10px; border:2px solid #0b2a55; background:#fff; color:#0b2a55; font-weight:700; cursor:pointer; transition:.2s }
+.btn:hover{ background:#0b2a55; color:#fff }
+.btn-danger{ border-color:#9b1c1c; color:#9b1c1c }
+.btn-danger:hover{ background:#9b1c1c; color:#fff }
+.btn-success{ border-color:#1e7a3a; color:#1e7a3a }
+.btn-success:hover{ background:#1e7a3a; color:#fff }
+
+/* Pages */
+.page{ display:none }
+.page.active{ display:block }
+
+.form label{ display:block; font-weight:700; margin-top:8px }
+.form input{ width:100%; padding:12px; border-radius:10px; border:1px solid var(--border); margin-top:6px }
+
+.actions{ display:flex; gap:8px; flex-wrap:wrap }
+
+/* Responsive */
+@media (max-width: 960px){
+  .layout{ flex-direction:column }
+  .sidebar{ height:auto; position:relative; width:auto; border-bottom:1px solid rgba(16,42,67,.08) }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="crest" aria-hidden="true">🛡️</div>
+      <h1>Officer Panel</h1>
+    </div>
+    <div class="nav">
+      <button id="nav-verify" class="active" onclick="openPage('verify', this)">⭐ Pending Approvals</button>
+      <button id="nav-approved" onclick="openPage('approved', this)">📋 Approved Voters</button>
+      <button id="nav-rejected" onclick="openPage('rejected', this)">❌ Rejected Voters</button>
+      <button id="nav-elections" onclick="openPage('elections', this)">🗳️ Future Elections</button>
+      <button id="nav-settings" onclick="openPage('settings', this)">⚙️ Settings</button>
+      <button onclick="logout()">🚪 Logout</button>
+    </div>
+    <div class="footer-note">Tricolour sidebar uses a 45° gradient (saffron • white • green) for a subtle patriotic theme.</div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <h2 id="pageTitle">Pending Approvals</h2>
+      <span class="badge">Officer: <strong>John Doe</strong></span>
+    </div>
+
+    <!-- Pending Approvals -->
+    <section id="page-verify" class="page active">
+      <div class="card">
+        <table class="table">
+          <tr>
+            <th>Name</th><th>Phone</th><th>Constituency</th><th>Aadhar</th><th>Action</th>
+          </tr>
+          <tr>
+            <td>Ravi Kumar</td><td>9000000012</td><td>Ward 14</td><td>XXXX-1234</td>
+            <td class="actions">
+              <button class="btn btn-success" onclick="approve(this)">Approve</button>
+              <button class="btn btn-danger" onclick="reject(this)">Reject</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Anita Devi</td><td>9000000034</td><td>Ward 09</td><td>XXXX-9876</td>
+            <td class="actions">
+              <button class="btn btn-success" onclick="approve(this)">Approve</button>
+              <button class="btn btn-danger" onclick="reject(this)">Reject</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- Approved Voters -->
+    <section id="page-approved" class="page">
+      <div class="card">
+        <table class="table">
+          <tr><th>Name</th><th>Voter ID</th><th>Constituency</th></tr>
+          <tr><td>Ravi Kumar</td><td>ABC1234567</td><td>Ward 14</td></tr>
+          <tr><td>Fatima Noor</td><td>XYZ7654321</td><td>Ward 07</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- Rejected Voters -->
+    <section id="page-rejected" class="page">
+      <div class="card">
+        <table class="table">
+          <tr><th>Name</th><th>Reason</th></tr>
+          <tr><td>Santosh</td><td>Aadhar mismatch</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- Future Elections + Vote -->
+    <section id="page-elections" class="page">
+      <div class="card">
+        <h3 style="margin:0 0 10px;color:var(--blue)">Upcoming Elections</h3>
+        <div class="card" style="margin:10px 0 0">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+            <div>
+              <div style="font-weight:800;color:#0b2a55">State Assembly Election</div>
+              <div style="font-size:14px;color:#334e68">Date: 15 Mar 2025 • Time: 8:00 AM – 5:00 PM</div>
+            </div>
+            <button class="btn" onclick="voteNow()">Vote</button>
+          </div>
+        </div>
+        <div class="card" style="margin:12px 0 0">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+            <div>
+              <div style="font-weight:800;color:#0b2a55">Municipal Election</div>
+              <div style="font-size:14px;color:#334e68">Date: 10 Jun 2025 • Time: 8:00 AM – 5:00 PM</div>
+            </div>
+            <button class="btn" onclick="voteNow()">Vote</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section id="page-settings" class="page">
+      <div class="card">
+        <h3 style="margin:0 0 10px;color:var(--blue)">Change Password</h3>
+        <div class="form">
+          <label>Old Password</label>
+          <input type="password" id="oldPass" placeholder="Enter current password" />
+          <label>New Password</label>
+          <input type="password" id="newPass" placeholder="Enter new password" />
+          <label>Confirm Password</label>
+          <input type="password" id="confirmPass" placeholder="Re-enter new password" />
+          <div style="margin-top:12px">
+            <button class="btn" onclick="savePassword()">Save Password</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+function openPage(key, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+key).classList.add('active');
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const titles={verify:'Pending Approvals', approved:'Approved Voters', rejected:'Rejected Voters', elections:'Future Elections', settings:'Settings'};
+  document.getElementById('pageTitle').textContent=titles[key]||'Dashboard';
+}
+function approve(el){ rowMove(el,'approved'); }
+function reject(el){ rowMove(el,'rejected'); }
+function rowMove(el, dest){
+  const tr=el.closest('tr');
+  const row=tr.cloneNode(true);
+  // simplify row for destination tables
+  if(dest==='approved'){
+    const cells=row.querySelectorAll('td');
+    // name -> [0], voter id placeholder, constituency [2]
+    const name=cells[0].textContent; const consti=cells[2].textContent;
+    row.innerHTML=`<td>${name}</td><td>GEN${Math.floor(Math.random()*900000+100000)}</td><td>${consti}</td>`;
+    document.querySelector('#page-approved .table').appendChild(row);
+  } else {
+    row.innerHTML=`<td>${tr.children[0].textContent}</td><td>Manual review required</td>`;
+    document.querySelector('#page-rejected .table').appendChild(row);
+  }
+  tr.remove();
+}
+function voteNow(){ alert('Voting UI coming next'); }
+function savePassword(){ alert('Password updated (placeholder)'); }
+function logout(){ window.location.href='/officer_login'; }
+</script>
+</body>
+</html>

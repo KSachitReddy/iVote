@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start Election — Commissioner</title>
+<style>
+:root{
+ --bg:#f2f6fa;
+ --govBlue:#0b2a55;
+ --govGold:#caa553;
+ --white:#ffffff;
+ --border:#d9e2ec;
+ --text:#243b53;
+ --radius:10px;
+ font-family:system-ui,Segoe UI,Roboto;
+}
+body{
+ background:var(--bg);
+ margin:0;
+ display:flex;
+ justify-content:center;
+ padding:60px 20px;
+}
+.container{
+ width:550px;
+ background:var(--white);
+ padding:32px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+h2{
+ margin:0 0 20px;
+ color:var(--govBlue);
+ font-size:22px;
+ font-weight:700;
+ text-align:center;
+}
+label{
+ font-size:14px;
+ font-weight:600;
+ color:var(--text);
+ margin-bottom:6px;
+ display:block;
+}
+input, select{
+ width:100%;
+ padding:12px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ font-size:15px;
+ margin-bottom:14px;
+}
+button{
+ width:100%;
+ padding:12px;
+ background:var(--govBlue);
+ border:none;
+ color:white;
+ font-size:16px;
+ font-weight:600;
+ border-radius:var(--radius);
+ cursor:pointer;
+ margin-top:10px;
+}
+.cancel-btn{
+ background:#808b96;
+ margin-top:6px;
+}
+.success{
+ display:none;
+ background:#d1fad7;
+ color:#1b662c;
+ padding:12px;
+ text-align:center;
+ border-radius:var(--radius);
+ margin-bottom:20px;
+ font-size:14px;
+ font-weight:600;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>Start a New Election</h2>
+
+<div id="msg" class="success">✅ Election Created Successfully</div>
+
+<form id="electionForm" onsubmit="return false;">
+<label>Election Title</label>
+<input type="text" id="title" placeholder="Eg: Municipal Elections 2025" required>
+
+<label>Election Type</label>
+<select id="type">
+  <option value="Municipal">Municipal</option>
+  <option value="State Assembly">State Assembly</option>
+  <option value="Parliamentary">Parliamentary</option>
+  <option value="College/University">College/University</option>
+</select>
+
+<label>Start Date</label>
+<input type="date" id="start" required>
+
+<label>End Date</label>
+<input type="date" id="end" required>
+
+<button onclick="startElection()">Start Election</button>
+<a href="/commissioner_dashboard"><button class="cancel-btn" type="button">Cancel</button></a>
+</form>
+</div>
+
+<script>
+function startElection(){
+ const title = document.getElementById("title").value.trim();
+ const start = document.getElementById("start").value;
+ const end = document.getElementById("end").value;
+
+ if(!title || !start || !end){
+   alert("Please fill all fields");
+   return;
+ }
+
+ // You will replace this alert with Flask POST later
+ document.getElementById("msg").style.display = "block";
+ setTimeout(()=>{ document.getElementById("msg").style.display="none"; }, 2000);
+
+ // For now just reset form
+ document.getElementById("electionForm").reset();
+}
+</script>
+
+</body>
+</html>

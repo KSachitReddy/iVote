@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voter Registration</title>
+<style>
+:root{
+ --bg:#f2f6fa;
+ --govBlue:#0b2a55;
+ --white:#ffffff;
+ --border:#d9e2ec;
+ --text:#243b53;
+ --radius:10px;
+ font-family:system-ui,Segoe UI,Roboto;
+}
+body{
+ background:var(--bg);
+ margin:0;
+ display:flex;
+ justify-content:center;
+ padding:40px 20px;
+}
+.container{
+ width:600px;
+ background:var(--white);
+ padding:32px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+h2{
+ margin:0 0 20px;
+ color:var(--govBlue);
+ font-size:24px;
+ font-weight:700;
+ text-align:center;
+}
+label{
+ display:block;
+ font-size:14px;
+ font-weight:600;
+ margin-top:12px;
+ color:var(--text);
+}
+input, select{
+ width:100%;
+ padding:12px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ font-size:15px;
+ margin-top:6px;
+}
+button{
+ width:100%;
+ padding:12px;
+ background:var(--govBlue);
+ border:none;
+ color:white;
+ font-size:16px;
+ font-weight:600;
+ border-radius:var(--radius);
+ cursor:pointer;
+ margin-top:18px;
+}
+.success{
+ display:none;
+ background:#d1fad7;
+ color:#1b662c;
+ padding:10px;
+ text-align:center;
+ border-radius:var(--radius);
+ margin-bottom:15px;
+ font-size:14px;
+ font-weight:600;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Voter Registration</h2>
+<div id="msg" class="success">✅ Registration Successful</div>
+<form id="voterForm" onsubmit="return false;">
+<label>Full Name</label>
+<input type="text" id="name" placeholder="Enter your full name" required>
+
+<label>Father's Name</label>
+<input type="text" id="father" placeholder="Enter father's name" required>
+
+<label>Address</label>
+<input type="text" id="address" placeholder="Enter full address" required>
+
+<label>Phone Number</label>
+<input type="text" id="phone" placeholder="Enter phone number" required>
+
+<label>State</label>
+<input type="text" id="state" placeholder="Enter state" required>
+
+<label>District</label>
+<input type="text" id="district" placeholder="Enter district" required>
+
+<label>Constituency</label>
+<input type="text" id="constituency" placeholder="Enter constituency" required>
+
+<label>Aadhar Number</label>
+<input type="text" id="aadhar" placeholder="Enter Aadhar number" required>
+
+<label>Voter ID</label>
+<input type="text" id="voterid" placeholder="Enter Voter ID" required>
+
+<label>Password</label>
+<input type="password" id="password" placeholder="Create password" required>
+
+<button onclick="registerVoter()">Register</button>
+</form>
+</div>
+
+<script>
+function registerVoter(){
+ document.getElementById("msg").style.display="block";
+ setTimeout(()=>{ document.getElementById("msg").style.display="none"; },2000);
+ document.getElementById("voterForm").reset();
+}
+</script>
+</body>
+</html>

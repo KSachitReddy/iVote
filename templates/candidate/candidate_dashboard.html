@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Candidate Dashboard</title>
+<style>
+:root{
+ --bg:#a8c9ff;
+ --white:#ffffff;
+ --blue:#0b2a55;
+ --border:#d9e2ec;
+ --radius:10px;
+ font-family:system-ui,Segoe UI,Roboto;
+}
+body{
+ background:var(--bg);
+ margin:0;
+ display:flex;
+ justify-content:center;
+ padding:40px 20px;
+ min-height:100vh;
+}
+.container{
+ width:620px;
+ background:var(--white);
+ padding:32px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+h2{
+ margin:0 0 14px;
+ color:var(--blue);
+ font-size:24px;
+ font-weight:700;
+ text-align:center;
+}
+.nav-btns{
+ display:flex;
+ gap:10px;
+ margin-bottom:20px;
+}
+button{
+ flex:1;
+ padding:12px;
+ background:var(--white);
+ color:var(--blue);
+ font-size:16px;
+ font-weight:600;
+ border:2px solid var(--blue);
+ border-radius:var(--radius);
+ cursor:pointer;
+ transition:.2s;
+}
+button:hover{
+ background:var(--blue);
+ color:white;
+}
+.section{ display:none; }
+.section.active{ display:block; }
+.table{
+ width:100%; border-collapse:collapse; margin-top:10px;
+}
+.table th, .table td{
+ border:1px solid var(--border);
+ padding:10px;
+ font-size:14px;
+ text-align:left;
+}
+.table th{
+ background:#f3f7ff; color:var(--blue);
+}
+label{
+ display:block;
+ margin-top:12px;
+ font-weight:600;
+ color:var(--blue);
+}
+input{
+ width:100%; padding:12px; border-radius:var(--radius);
+ border:1px solid var(--border);
+ margin-top:6px;
+}
+.save-btn{
+ margin-top:18px;
+ width:100%; padding:12px;
+ background:var(--white);
+ border:2px solid var(--blue);
+ color:var(--blue);
+ font-size:16px;
+ font-weight:600;
+ border-radius:var(--radius);
+ cursor:pointer;
+}
+.save-btn:hover{
+ background:var(--blue); color:white;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Candidate Dashboard</h2>
+<div class="nav-btns">
+<button onclick="openTab('ranking')">Election Ranking</button>
+<button onclick="openTab('settings')">Settings</button>
+<button onclick="logout()">Logout</button>
+</div>
+
+<!-- Ranking Section -->
+<div id="ranking" class="section active">
+<h3 style="color:var(--blue);text-align:center;margin:0 0 10px;">Candidate Rankings - Your Constituency</h3>
+<table class="table">
+<tr>
+<th>Position</th><th>Name</th><th>Party</th><th>Votes</th>
+</tr>
+<tr><td>1</td><td>You (Candidate)</td><td>Your Party</td><td>1200</td></tr>
+<tr><td>2</td><td>Ravi Kumar</td><td>ABC Party</td><td>950</td></tr>
+<tr><td>3</td><td>Anita Devi</td><td>XYZ Party</td><td>720</td></tr>
+</table>
+</div>
+
+<!-- Settings Section -->
+<div id="settings" class="section">
+<h3 style="color:var(--blue);text-align:center;margin:0 0 10px;">Change Password</h3>
+<label>Old Password</label>
+<input type="password" placeholder="Enter old password">
+<label>New Password</label>
+<input type="password" placeholder="Enter new password">
+<label>Confirm New Password</label>
+<input type="password" placeholder="Re-enter new password">
+<button class="save-btn" onclick="savePassword()">Save Password</button>
+</div>
+</div>
+
+<script>
+function openTab(tab){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(tab).classList.add('active');
+}
+function logout(){ window.location.href='/candidate_login'; }
+function savePassword(){ alert("Password updated successfully!"); }
+</script>
+</body>
+</html>

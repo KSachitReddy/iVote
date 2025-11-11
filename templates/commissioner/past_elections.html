@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Past Elections — Commissioner</title>
+<style>
+:root{
+ --bg:#f2f6fa;
+ --govBlue:#0b2a55;
+ --white:#ffffff;
+ --border:#d9e2ec;
+ --text:#243b53;
+ --radius:10px;
+ font-family:system-ui,Segoe UI,Roboto;
+}
+body{
+ background:var(--bg);
+ margin:0;
+ display:flex;
+ justify-content:center;
+ padding:60px 20px;
+}
+.container{
+ width:700px;
+ background:var(--white);
+ padding:32px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+h2{
+ margin:0 0 20px;
+ color:var(--govBlue);
+ font-size:22px;
+ font-weight:700;
+ text-align:center;
+}
+.table{
+ width:100%;
+ border-collapse:collapse;
+ margin-top:10px;
+}
+.table th, .table td{
+ border:1px solid var(--border);
+ padding:12px;
+ text-align:left;
+ font-size:14px;
+}
+.table th{
+ background:#e8eff7;
+ color:var(--govBlue);
+ font-weight:600;
+}
+.view-btn{
+ padding:8px 12px;
+ background:var(--govBlue);
+ color:white;
+ font-size:13px;
+ font-weight:600;
+ border:none;
+ border-radius:6px;
+ cursor:pointer;
+}
+.back-btn{
+ margin-top:18px;
+ width:100%;
+ padding:12px;
+ background:#808b96;
+ border:none;
+ color:white;
+ font-size:16px;
+ font-weight:600;
+ border-radius:var(--radius);
+ cursor:pointer;
+}
+.no-data{
+ text-align:center;
+ padding:20px;
+ color:#455d74;
+ font-size:15px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>Past Elections</h2>
+
+<table class="table" id="electionTable">
+<tr>
+ <th>Election Title</th>
+ <th>Type</th>
+ <th>Period</th>
+ <th>Action</th>
+</tr>
+
+<!-- Placeholder sample data — replace with DB loop -->
+<tr>
+ <td>Municipal Elections 2024</td>
+ <td>Municipal</td>
+ <td>01 Jan 2024 - 03 Jan 2024</td>
+ <td><button class="view-btn" onclick="viewResult()">View</button></td>
+</tr>
+<tr>
+ <td>State Assembly 2023</td>
+ <td>State Assembly</td>
+ <td>10 Nov 2023 - 15 Nov 2023</td>
+ <td><button class="view-btn" onclick="viewResult()">View</button></td>
+</tr>
+
+</table>
+
+<button class="back-btn" onclick="goBack()">Back</button>
+</div>
+
+<script>
+function viewResult(){
+ alert("Result Page Coming Soon — Connect to DB next step");
+}
+
+function goBack(){
+ window.location.href="/commissioner_dashboard";
+}
+</script>
+
+</body>
+</html>

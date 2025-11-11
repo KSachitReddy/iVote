@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CO Dashboard</title>
+<style>
+:root{
+ --bg:#eef5ff;
+ --white:#ffffff;
+ --blue:#0b2a55;
+ --border:#d9e2ec;
+ --radius:12px;
+ font-family:system-ui,Segoe UI,Roboto;
+}
+body{
+ margin:0; display:flex; background:var(--bg); min-height:100vh;
+}
+/* Sidebar */
+.sidebar{
+ width:260px; background:linear-gradient(45deg,#138808,#ffffff,#FF9933);
+ padding:22px 18px; display:flex; flex-direction:column;
+ box-shadow:inset 0 0 0 9999px rgba(0,0,0,0.07);
+}
+.sidebar h2{
+ margin:0 0 18px; font-size:18px; font-weight:800; color:#0b2a55;
+}
+.nav button{
+ width:100%; padding:12px; border-radius:10px; margin-bottom:10px; cursor:pointer;
+ background:var(--white); color:var(--blue); border:2px solid var(--blue); font-weight:700;
+ transition:.2s;
+}
+.nav button:hover{ background:var(--blue); color:white; }
+.nav button.active{ background:var(--blue); color:white; }
+
+/* Main */
+.main{
+ flex:1; padding:26px;
+}
+.card{
+ background:var(--white); padding:18px; border-radius:var(--radius);
+ border:1px solid var(--border); margin-bottom:16px;
+ box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
+h3{ margin:0 0 10px; color:var(--blue); }
+.table{ width:100%; border-collapse:collapse; }
+.table th, .table td{
+ border:1px solid var(--border); padding:10px; font-size:14px;
+}
+.table th{
+ background:#e8f1ff; font-weight:700; color:var(--blue);
+}
+.btn{ padding:6px 10px; border-radius:8px; border:2px solid var(--blue);
+ background:#fff; color:var(--blue); font-weight:700; cursor:pointer; margin-right:6px;
+}
+.btn:hover{ background:var(--blue); color:white; }
+.btn-danger{ border-color:#9b1c1c; color:#9b1c1c; }
+.btn-danger:hover{ background:#9b1c1c; color:#fff; }
+.btn-success{ border-color:#1e7a3a; color:#1e7a3a; }
+.btn-success:hover{ background:#1e7a3a; color:#fff; }
+.section{ display:none; }
+.section.active{ display:block; }
+</style>
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar">
+<h2>CO Panel</h2>
+<div class="nav">
+<button class="active" onclick="openTab('verifyCandidates', this)">Verify Candidates</button>
+<button onclick="openTab('approvedCandidates', this)">Approved Candidates</button>
+<button onclick="openTab('rejectedCandidates', this)">Rejected Candidates</button>
+<button onclick="openTab('verifyOfficers', this)">Verify Officers</button>
+<button onclick="openTab('approvedOfficers', this)">Approved Officers</button>
+<button onclick="openTab('rejectedOfficers', this)">Rejected Officers</button>
+<button onclick="openTab('settings', this)">Settings</button>
+<button onclick="logout()">Logout</button>
+</div>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+
+<!-- Verify Candidates -->
+<div id="verifyCandidates" class="section active card">
+<h3>Pending Candidate Approvals</h3>
+<table class="table">
+<tr><th>Name</th><th>Party</th><th>Constituency</th><th>Action</th></tr>
+<tr><td>Ravi Patel</td><td>ABC Party</td><td>Ward 12</td>
+<td><button class="btn btn-success" onclick="approve(this,'approvedCandidates')">Approve</button><button class="btn btn-danger" onclick="reject(this,'rejectedCandidates')">Reject</button></td></tr>
+</table>
+</div>
+
+<!-- Approved Candidates -->
+<div id="approvedCandidates" class="section card">
+<h3>Approved Candidates</h3>
+<table class="table">
+<tr><th>Name</th><th>Party</th></tr>
+</table>
+</div>
+
+<!-- Rejected Candidates -->
+<div id="rejectedCandidates" class="section card">
+<h3>Rejected Candidates</h3>
+<table class="table">
+<tr><th>Name</th><th>Reason</th></tr>
+</table>
+</div>
+
+<!-- Verify Officers -->
+<div id="verifyOfficers" class="section card">
+<h3>Pending Officer Approvals</h3>
+<table class="table">
+<tr><th>Name</th><th>District</th><th>Action</th></tr>
+<tr><td>Sunil Kumar</td><td>Zone 4</td>
+<td><button class="btn btn-success" onclick="approve(this,'approvedOfficers')">Approve</button><button class="btn btn-danger" onclick="reject(this,'rejectedOfficers')">Reject</button></td></tr>
+</table>
+</div>
+
+<!-- Approved Officers -->
+<div id="approvedOfficers" class="section card">
+<h3>Approved Officers</h3>
+<table class="table">
+<tr><th>Name</th><th>District</th></tr>
+</table>
+</div>
+
+<!-- Rejected Officers -->
+<div id="rejectedOfficers" class="section card">
+<h3>Rejected Officers</h3>
+<table class="table">
+<tr><th>Name</th><th>Reason</th></tr>
+</table>
+</div>
+
+<!-- Settings -->
+<div id="settings" class="section card">
+<h3>Change Password</h3>
+<label>Old Password</label><input type="password">
+<label>New Password</label><input type="password">
+<label>Confirm Password</label><input type="password">
+<button class="btn" style="margin-top:12px">Save Password</button>
+</div>
+
+</div>
+
+<script>
+function openTab(id, btn){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+}
+function approve(el, tableId){ move(el, tableId, 'Approved'); }
+function reject(el, tableId){ move(el, tableId, 'Rejected'); }
+function move(el, tableId, status){
+ const tr = el.closest('tr');
+ const name = tr.children[0].textContent;
+ const extra = tr.children[1]?.textContent || "";
+ let newRow = document.createElement('tr');
+ if(status==='Approved') newRow.innerHTML = `<td>${name}</td><td>${extra}</td>`;
+ else newRow.innerHTML = `<td>${name}</td><td>Rejected by CO</td>`;
+ document.querySelector(`#${tableId} .table`).appendChild(newRow);
+ tr.remove();
+}
+function logout(){ window.location.href='/co_login'; }
+</script>
+</body>
+</html>

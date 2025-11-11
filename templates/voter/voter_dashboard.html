@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voter Dashboard</title>
+<style>
+:root{$1
+ --btn:#1557b0;
+ --btnHover:#0e3f88;
+}
+body{
+ background:#a8c9ff; /* deep govt blue */
+ margin:0;
+ display:flex;
+ justify-content:center;
+ padding:60px 20px;
+}
+.container{
+ width:650px;
+ background:var(--white);
+ padding:32px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+h2{
+ margin:0 0 20px;
+ color:var(--govBlue);
+ font-size:24px;
+ font-weight:700;
+ text-align:center;
+}
+.section-btn{
+ width:100%;
+ padding:14px;
+ background:#ffffff;
+ color:#0b2a55;
+ font-size:16px;
+ font-weight:600;
+ border:2px solid #ffffff;
+ border-radius:var(--radius);
+ cursor:pointer;
+ margin:12px 0;
+ transition:0.2s;
+}
+.section-btn:hover{
+ background:#e8f1ff;
+ color:#0b2a55;
+ border-color:#e8f1ff;
+}
+.section-btn:hover{ background:var(--btnHover); }
+.section-btn:active{ transform:translateY(1px); }
+.section-btn:hover{
+ background:var(--btnHover);
+ color:white;
+}
+.page{
+ display:none;
+ margin-top:20px;
+}
+.card{
+ background:#f8fbff;
+ border:1px solid var(--border);
+ padding:16px;
+ border-radius:var(--radius);
+ margin-bottom:15px;
+}
+.card h4{
+ margin:0 0 6px;
+ font-size:18px;
+ color:var(--govBlue);
+ font-weight:700;
+}
+.vote-btn{
+ margin-top:10px;
+ padding:10px 12px;
+ background:#ffffff;
+ color:#0b2a55;
+ border:2px solid #ffffff;
+ border-radius:var(--radius);
+ font-size:14px;
+ cursor:pointer;
+ font-weight:600;
+ transition:0.2s;
+}
+.vote-btn:hover{
+ background:#e8f1ff;
+ color:#0b2a55;
+ border-color:#e8f1ff;
+}
+.vote-btn:hover{ background:var(--btnHover); }
+.vote-btn:active{ transform:translateY(1px); }
+.vote-btn:hover{
+ background:var(--btnHover);
+ color:white;
+}
+label{
+ font-size:14px;
+ font-weight:600;
+ margin-top:10px;
+ display:block;
+}
+input{
+ width:100%;
+ padding:12px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ font-size:15px;
+ margin-top:6px;
+}
+.save-btn{
+ width:100%;
+ padding:12px;
+ background:#ffffff;
+ border:2px solid #ffffff;
+ color:#0b2a55;
+ font-size:16px;
+ font-weight:600;
+ border-radius:var(--radius);
+ cursor:pointer;
+ margin-top:16px;
+ transition:0.2s;
+}
+.save-btn:hover{
+ background:#e8f1ff;
+ color:#0b2a55;
+ border-color:#e8f1ff;
+}
+.save-btn:hover{ background:var(--btnHover); }
+.save-btn:active{ transform:translateY(1px); }
+.save-btn:hover{
+ background:var(--btnHover);
+ color:white;
+}
+.success{
+ display:none;
+ background:#d1fad7;
+ color:#1b662c;
+ padding:10px;
+ text-align:center;
+ border-radius:var(--radius);
+ margin-bottom:15px;
+ font-size:14px;
+ font-weight:600;
+}
+.back-btn{
+ margin-top:22px;
+ width:100%;
+ padding:12px;
+ background:#ffffff;
+ border:2px solid #ffffff;
+ color:#0b2a55;
+ font-size:16px;
+ font-weight:600;
+ border-radius:var(--radius);
+ cursor:pointer;
+ transition:0.2s;
+}
+.back-btn:hover{
+ background:#e8f1ff;
+ color:#0b2a55;
+ border-color:#e8f1ff;
+}
+.back-btn:hover{
+ background:var(--btn);
+ color:#ffffff;
+}
+.back-btn:hover{
+ background:#808b96;
+ color:white;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Voter Dashboard</h2>
+<button class="section-btn" onclick="showUpcoming()">Upcoming Elections - 2025</button>
+<button class="section-btn" onclick="showSettings()">Settings</button>
+
+<div id="upcoming" class="page">
+  <div class="card">
+    <h4>State Assembly Election</h4>
+    <p>Date: 15 March 2025<br>Time: 8:00 AM - 5:00 PM</p>
+    <button class="vote-btn" onclick="vote()">Vote</button>
+  </div>
+  <div class="card">
+    <h4>Municipal Election</h4>
+    <p>Date: 10 June 2025<br>Time: 8:00 AM - 5:00 PM</p>
+    <button class="vote-btn" onclick="vote()">Vote</button>
+  </div>
+  <button class="back-btn" onclick="hidePages()">Back</button>
+</div>
+
+<div id="settings" class="page">
+ <div id="msg" class="success">✅ Password Updated</div>
+ <label>Old Password</label>
+ <input type="password" id="oldPass" placeholder="Enter current password">
+ <label>New Password</label>
+ <input type="password" id="newPass" placeholder="Enter new password">
+ <label>Confirm Password</label>
+ <input type="password" id="confirmPass" placeholder="Re-enter new password">
+ <button class="save-btn" onclick="savePassword()">Save Password</button>
+ <button class="back-btn" onclick="hidePages()">Back</button>
+</div>
+</div>
+
+<script>
+function hidePages(){
+ document.getElementById("upcoming").style.display="none";
+ document.getElementById("settings").style.display="none";
+}
+function showUpcoming(){ hidePages(); document.getElementById("upcoming").style.display="block"; }
+function showSettings(){ hidePages(); document.getElementById("settings").style.display="block"; }
+function vote(){ alert("Voting page coming next"); }
+function savePassword(){
+ document.getElementById("msg").style.display="block";
+ setTimeout(()=>{ document.getElementById("msg").style.display="none"; },2000);
+ document.getElementById("oldPass").value="";
+ document.getElementById("newPass").value="";
+ document.getElementById("confirmPass").value="";
+}
+</script>
+</body>
+</html>

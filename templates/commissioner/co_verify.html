@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commissioner - Verify CO</title>
+<style>
+:root{
+ --white:#ffffff;
+ --blue:#0b2a55;
+ --border:#d9e2ec;
+ --radius:12px;
+ font-family:system-ui,Segoe UI,Roboto;
+}
+body{
+ margin:0; display:flex; background:#eef5ff; min-height:100vh;
+}
+/* Sidebar (Tricolour) */
+.sidebar{
+ width:260px;
+ background:linear-gradient(45deg,#FF9933,#ffffff,#138808);
+ padding:22px 18px;
+ display:flex; flex-direction:column;
+ box-shadow:inset 0 0 0 9999px rgba(0,0,0,0.07);
+}
+.sidebar h2{
+ margin:0 0 18px; font-size:18px; font-weight:800; color:#0b2a55;
+}
+.nav button{
+ width:100%; padding:12px; border-radius:10px; margin-bottom:10px;
+ cursor:pointer; background:var(--white); color:var(--blue);
+ border:2px solid var(--blue); font-weight:700; transition:.2s;
+}
+.nav button:hover{ background:var(--blue); color:white; }
+.nav button.active{ background:var(--blue); color:white; }
+
+/* Main */
+.main{ flex:1; padding:26px; }
+.card{
+ background:var(--white); padding:18px; border-radius:var(--radius);
+ border:1px solid var(--border); margin-bottom:18px;
+ box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
+h3{ margin:0 0 10px; color:var(--blue); }
+.table{ width:100%; border-collapse:collapse; }
+.table th, .table td{
+ border:1px solid var(--border); padding:10px; font-size:14px;
+}
+.table th{ background:#e8f1ff; font-weight:700; color:var(--blue); }
+
+.btn{
+ padding:6px 10px; border-radius:8px; border:2px solid var(--blue);
+ background:#fff; color:var(--blue); font-weight:700; cursor:pointer; margin-right:6px;
+ transition:.2s;
+}
+.btn:hover{ background:var(--blue); color:white; }
+.btn-danger{ border-color:#9b1c1c; color:#9b1c1c; }
+.btn-danger:hover{ background:#9b1c1c; color:#fff; }
+.btn-success{ border-color:#1e7a3a; color:#1e7a3a; }
+.btn-success:hover{ background:#1e7a3a; color:#fff; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+<h2>Commissioner Panel</h2>
+<div class="nav">
+<button onclick="goDashboard()">Dashboard</button>
+<button class="active">Verify CO</button>
+<button onclick="goSettings()">Settings</button>
+<button onclick="logout()">Logout</button>
+</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+<!-- Pending -->
+<div class="card">
+<h3>Pending CO Approvals</h3>
+<table class="table" id="pendingCO">
+<tr><th>Name</th><th>Region</th><th>Action</th></tr>
+<tr>
+<td>Vikram Rao</td><td>North Zone</td>
+<td>
+<button class="btn btn-success" onclick="approve(this,'approvedCO')">Approve</button>
+<button class="btn btn-danger" onclick="reject(this,'rejectedCO')">Reject</button>
+</td>
+</tr>
+</table>
+</div>
+
+<!-- Approved -->
+<div class="card">
+<h3>Approved COs</h3>
+<table class="table" id="approvedCO">
+<tr><th>Name</th><th>Region</th></tr>
+</table>
+</div>
+
+<!-- Rejected -->
+<div class="card">
+<h3>Rejected COs</h3>
+<table class="table" id="rejectedCO">
+<tr><th>Name</th><th>Reason</th></tr>
+</table>
+</div>
+
+</div>
+
+<script>
+function approve(el,tableId){
+ moveRow(el,tableId,'Approved');
+}
+function reject(el,tableId){
+ moveRow(el,tableId,'Rejected');
+}
+function moveRow(el,tableId,status){
+ const tr = el.closest('tr');
+ const name = tr.children[0].textContent;
+ const region = tr.children[1].textContent;
+ let newRow = document.createElement('tr');
+
+ if(status==='Approved'){
+   newRow.innerHTML=`<td>${name}</td><td>${region}</td>`;
+ } else {
+   newRow.innerHTML=`<td>${name}</td><td>Rejected by Commissioner</td>`;
+ }
+ document.getElementById(tableId).appendChild(newRow);
+ tr.remove();
+}
+
+function goDashboard(){ window.location.href='/commissioner_dashboard'; }
+function goSettings(){ window.location.href='/commissioner_settings'; }
+function logout(){ window.location.href='/commissioner_login'; }
+</script>
+
+</body>
+</html>
+

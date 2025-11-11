@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Candidate Registration</title>
+<style>
+:root{
+ --bg:#a8c9ff;
+ --white:#ffffff;
+ --blue:#0b2a55;
+ --border:#d9e2ec;
+ --radius:10px;
+ font-family:system-ui,Segoe UI,Roboto;
+}
+body{
+ background:var(--bg);
+ margin:0;
+ display:flex;
+ justify-content:center;
+ padding:40px 20px;
+}
+.container{
+ width:520px;
+ background:var(--white);
+ padding:32px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+h2{
+ margin:0 0 20px;
+ color:var(--blue);
+ font-size:24px;
+ font-weight:700;
+ text-align:center;
+}
+label{
+ font-size:14px;
+ font-weight:600;
+ margin-top:12px;
+ color:var(--blue);
+ display:block;
+}
+input, textarea, select{
+ width:100%;
+ padding:12px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ font-size:15px;
+ margin-top:6px;
+}
+textarea{
+ resize:vertical;
+ min-height:80px;
+}
+button{
+ width:100%;
+ padding:12px;
+ background:var(--white);
+ color:var(--blue);
+ font-size:16px;
+ font-weight:600;
+ border:2px solid var(--blue);
+ border-radius:var(--radius);
+ cursor:pointer;
+ margin-top:18px;
+ transition:0.2s;
+}
+button:hover{
+ background:var(--blue);
+ color:white;
+}
+.success{
+ display:none;
+ background:#d1fad7;
+ color:#1b662c;
+ padding:10px;
+ text-align:center;
+ border-radius:var(--radius);
+ margin-bottom:15px;
+ font-size:14px;
+ font-weight:600;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Candidate Registration</h2>
+<div id="msg" class="success">✅ Candidate Registered Successfully</div>
+<form id="candidateForm" onsubmit="return false;">
+
+<label>Full Name</label>
+<input type="text" id="name" placeholder="Enter full name" required>
+
+<label>Phone Number</label>
+<input type="text" id="phone" placeholder="Enter phone number" required>
+
+<label>Email Address</label>
+<input type="email" id="email" placeholder="Enter email address" required>
+
+<label>Permanent Address</label>
+<textarea id="address" placeholder="Enter permanent address" required></textarea>
+
+<label>Location of Nomination</label>
+<input type="text" id="nominationLocation" placeholder="Enter nomination location" required>
+
+<label>Position of Nomination</label>
+<select id="position" required>
+<option value="">Select position</option>
+<option value="Ward Councillor">Ward Councillor</option>
+<option value="Municipal Chairperson">Municipal Chairperson</option>
+<option value="MLA">MLA</option>
+<option value="MP">MP</option>
+<option value="Other">Other</option>
+</select>
+
+<label>Aadhar Number</label>
+<input type="text" id="aadhar" placeholder="Enter Aadhar number" required>
+
+<label>Voter ID</label>
+<input type="text" id="voterid" placeholder="Enter Voter ID" required>
+
+<label>Upload Candidate Photo</label>
+<input type="file" id="photo" accept="image/*" required>
+
+<label>Upload Party Symbol</label>
+<input type="file" id="partySymbol" accept="image/*" required>
+
+<label>Party Name</label>
+<input type="text" id="partyName" placeholder="Enter party name" required>
+
+<label>Create Password</label>
+<input type="password" id="password" placeholder="Enter password" required>
+
+<label>Confirm Password</label>
+<input type="password" id="cpassword" placeholder="Confirm password" required>
+
+<button onclick="registerCandidate()">Register</button>
+</form>
+</div>
+
+<script>
+function registerCandidate(){
+ document.getElementById("msg").style.display="block";
+ setTimeout(()=>{ document.getElementById("msg").style.display="none"; },2000);
+ document.getElementById("candidateForm").reset();
+}
+</script>
+</body>
+</html>

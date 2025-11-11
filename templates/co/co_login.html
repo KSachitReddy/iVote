@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CO Login</title>
+<style>
+:root{
+ --bg:#a8c9ff; /* light blue */
+ --white:#ffffff;
+ --blue:#0b2a55;
+ --border:#d9e2ec;
+ --radius:10px;
+ font-family:system-ui,Segoe UI,Roboto;
+}
+body{
+ background:var(--bg);
+ margin:0;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ height:100vh;
+ padding:20px;
+}
+.container{
+ width:380px;
+ background:var(--white);
+ padding:32px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+h2{
+ margin:0 0 20px;
+ color:var(--blue);
+ font-size:24px;
+ font-weight:700;
+ text-align:center;
+}
+label{
+ display:block;
+ font-size:14px;
+ font-weight:600;
+ margin-top:12px;
+ color:var(--blue);
+}
+input{
+ width:100%;
+ padding:12px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ font-size:15px;
+ margin-top:6px;
+}
+button{
+ width:100%;
+ padding:12px;
+ background:var(--white);
+ color:var(--blue);
+ font-size:16px;
+ font-weight:600;
+ border:2px solid var(--blue);
+ border-radius:var(--radius);
+ cursor:pointer;
+ margin-top:20px;
+ transition:0.2s;
+}
+button:hover{
+ background:var(--blue);
+ color:white;
+}
+.error{
+ display:none;
+ background:#ffd7d7;
+ color:#900;
+ padding:10px;
+ text-align:center;
+ border-radius:var(--radius);
+ margin-bottom:15px;
+ font-size:14px;
+ font-weight:600;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>CO Login</h2>
+<div id="err" class="error">Invalid Name or Password</div>
+<form id="loginForm" onsubmit="return false;">
+<label>Full Name</label>
+<input type="text" id="fullname" placeholder="Enter Full Name" required>
+
+<label>Password</label>
+<input type="password" id="password" placeholder="Enter Password" required>
+
+<button onclick="loginCO()">Login</button>
+</form>
+</div>
+
+<script>
+function loginCO(){
+ let id = document.getElementById("fullname").value.trim();
+ let pass = document.getElementById("password").value.trim();
+ if(id === "" || pass === ""){
+   document.getElementById("err").style.display = "block";
+   return;
+ }
+ // Later redirect: window.location.href="/co_dashboard";
+ document.getElementById("err").style.display = "block";
+}
+</script>
+</body>
+</html>

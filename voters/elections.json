@@ -1,8 +1,0 @@
-{
-    "electionName": "National Election 2025",
-    "candidates": [
-        { "id": 1, "name": "Aarav Deshmukh", "party": "Unity Party", "votes": 0 },
-        { "id": 2, "name": "Neha Singh", "party": "Progress Alliance", "votes": 0 },
-        { "id": 3, "name": "Rajiv Patel", "party": "People’s Front", "votes": 0 }
-    ]
-}

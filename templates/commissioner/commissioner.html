@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commissioner Login</title>
+<style>
+:root{
+ --bg:#eef5ff;
+ --white:#ffffff;
+ --blue:#0b2a55;
+ --border:#d9e2ec;
+ --radius:12px;
+ font-family:system-ui,Segoe UI,Roboto;
+}
+body{
+ background:var(--bg);
+ margin:0; display:flex; justify-content:center; align-items:center;
+ height:100vh;
+}
+.container{
+ width:400px; background:var(--white);
+ border-radius:var(--radius); border:1px solid var(--border);
+ box-shadow:0 6px 20px rgba(0,0,0,.12);
+ padding:30px; text-align:center;
+}
+.logo{
+ width:70px; height:70px; border-radius:50%; margin:auto;
+ background:var(--blue); color:white; display:flex; justify-content:center; align-items:center;
+ font-weight:700; border:3px solid gold;
+}
+h2{ color:var(--blue); margin-top:12px; font-size:22px; font-weight:800; }
+input{
+ width:100%; padding:12px; border-radius:var(--radius);
+ border:1px solid var(--border); font-size:15px;
+ margin-top:10px;
+}
+button{
+ width:100%; padding:12px; border-radius:var(--radius);
+ border:none; background:var(--blue); color:white;
+ margin-top:14px; font-size:15px; font-weight:700;
+ cursor:pointer; transition:.2s;
+}
+button:hover{ background:#0a1d40; }
+.error{ color:#b00020; font-weight:600; display:none; margin-top:6px; }
+
+/* Dashboard */
+.dashboard{
+ display:none; text-align:center;
+}
+.dash-btn{
+ width:100%; padding:14px; border-radius:var(--radius);
+ border:none; background:var(--blue); color:white;
+ margin:10px 0; font-weight:700; cursor:pointer;
+}
+</style>
+</head>
+<body>
+<div class="container" id="loginBox">
+ <div class="logo">GOV</div>
+ <h2>Commissioner Login</h2>
+ <input type="password" id="password" placeholder="Enter Password">
+ <button onclick="login()">Login</button>
+ <div class="error" id="err">Incorrect Password!</div>
+</div>
+
+<div class="container dashboard" id="dashBox">
+ <h2>Commissioner Panel</h2>
+ <button class="dash-btn" onclick="location.href='/start_election'">Start Election</button>
+ <button class="dash-btn" onclick="location.href='/past_elections'">Past Elections</button>
+ <button class="dash-btn" onclick="location.href='/co_verify'">Verify CO</button>
+ <button class="dash-btn" onclick="location.href='/settings'">Settings</button>
+</div>
+
+<script>
+function login(){
+ const pw=document.getElementById('password').value;
+ if(pw==='000000'){
+   document.getElementById('loginBox').style.display='none';
+   document.getElementById('dashBox').style.display='block';
+ } else {
+   document.getElementById('err').style.display='block';
+ }
+}
+</script>
+</body>
+</html>

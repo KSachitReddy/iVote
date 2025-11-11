@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings — Commissioner</title>
+<style>
+:root{
+ --bg:#f2f6fa;
+ --govBlue:#0b2a55;
+ --white:#ffffff;
+ --border:#d9e2ec;
+ --text:#243b53;
+ --radius:10px;
+ font-family:system-ui,Segoe UI,Roboto;
+}
+body{
+ background:var(--bg);
+ margin:0;
+ display:flex;
+ justify-content:center;
+ padding:60px 20px;
+}
+.container{
+ width:600px;
+ background:var(--white);
+ padding:32px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+h2{
+ margin:0 0 20px;
+ color:var(--govBlue);
+ font-size:22px;
+ font-weight:700;
+ text-align:center;
+}
+.section-title{
+ font-size:16px;
+ font-weight:700;
+ color:var(--govBlue);
+ margin-bottom:10px;
+ padding-bottom:6px;
+ border-bottom:2px solid var(--border);
+}
+label{
+ display:block;
+ margin-top:12px;
+ font-size:14px;
+ font-weight:600;
+}
+input, select{
+ width:100%;
+ padding:12px;
+ border-radius:var(--radius);
+ border:1px solid var(--border);
+ font-size:15px;
+ margin-top:5px;
+}
+button{
+ width:100%;
+ padding:12px;
+ background:var(--govBlue);
+ border:none;
+ color:white;
+ font-size:16px;
+ font-weight:600;
+ border-radius:var(--radius);
+ cursor:pointer;
+ margin-top:14px;
+}
+.cancel-btn{
+ background:#808b96;
+}
+.success{
+ display:none;
+ background:#d1fad7;
+ color:#1b662c;
+ padding:10px;
+ text-align:center;
+ border-radius:var(--radius);
+ margin-bottom:15px;
+ font-size:14px;
+ font-weight:600;
+}
+.warning{
+ background:#ffd8d8;
+ color:#9c0000;
+ padding:8px;
+ border-radius:var(--radius);
+ font-size:13px;
+ text-align:center;
+ margin-bottom:12px;
+ display:none;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h2>Settings</h2>
+
+<!-- Change Password -->
+<div class="section">
+<div class="section-title">Change Commissioner Password</div>
+
+<div id="passSuccess" class="success">✅ Password changed successfully</div>
+
+<label>Current Password</label>
+<input type="password" id="oldPass" placeholder="Enter current password">
+
+<label>New Password</label>
+<input type="password" id="newPass" placeholder="Enter new password">
+
+<label>Confirm New Password</label>
+<input type="password" id="confirmPass" placeholder="Re-enter new password">
+
+<button onclick="changePassword()">Update Password</button>
+</div>
+
+<hr style="margin:28px 0; border:0; border-top:1px solid var(--border);">
+
+<!-- Cancel Past Election -->
+<div class="section">
+<div class="section-title">Cancel Past Election</div>
+
+<div id="cancelWarn" class="warning">This election has already ended. Cannot cancel.</div>
+<div id="cancelSuccess" class="success">✅ Election cancelled successfully</div>
+
+<label>Select Election</label>
+<select id="electionSelect">
+  <option value="">Select an election</option>
+  <option value="1">Municipal Elections 2024</option>
+  <option value="2">State Assembly 2023</option>
+</select>
+
+<button onclick="cancelElection()" style="background:#b22222;">Cancel Election</button>
+</div>
+
+<button class="cancel-btn" onclick="window.location.href='/commissioner_dashboard'">Back</button>
+
+</div>
+
+<script>
+const originalPass = "000000"; // you will fetch from DB later
+
+function changePassword(){
+ let oldP = document.getElementById("oldPass").value;
+ let newP = document.getElementById("newPass").value;
+ let confP = document.getElementById("confirmPass").value;
+
+ if(oldP !== originalPass){
+   alert("Incorrect current password");
+   return;
+ }
+ if(newP.length < 6){
+   alert("Password must be at least 6 digits");
+   return;
+ }
+ if(newP !== confP){
+   alert("Passwords do not match");
+   return;
+ }
+
+ // flash success
+ document.getElementById("passSuccess").style.display = "block";
+ setTimeout(()=>{ document.getElementById("passSuccess").style.display="none"; }, 2000);
+
+ document.getElementById("oldPass").value="";
+ document.getElementById("newPass").value="";
+ document.getElementById("confirmPass").value="";
+}
+
+function cancelElection(){
+ let ele = document.getElementById("electionSelect").value;
+
+ if(ele === ""){
+   alert("Please select an election");
+   return;
+ }
+
+ // For now, show success. Later check if ongoing in DB
+ document.getElementById("cancelSuccess").style.display = "block";
+ setTimeout(()=>{ document.getElementById("cancelSuccess").style.display="none"; }, 2000);
+
+ document.getElementById("electionSelect").selectedIndex = 0;
+}
+</script>
+
+</body>
+</html>
